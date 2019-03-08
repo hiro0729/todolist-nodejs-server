@@ -22,7 +22,12 @@ module.exports = appInfo => {
   const userConfig = {
     security: {
       csrf: false,
+      domainWhiteList: ['http://localhost:8000']
     },
+    cros: {
+      origin:'*',
+      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+    }
   };
 
   return {

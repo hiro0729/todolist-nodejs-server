@@ -12,7 +12,6 @@ class AppBootHook {
       db.run('CREATE TABLE IF NOT EXISTS todolist (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,content TEXT)');
     });
     db.close();
-    console.log('db inited');
   }
 }
 module.exports = AppBootHook;

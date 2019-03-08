@@ -1,16 +1,18 @@
 'use strict';
 
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('demo.sqlite3');
 
 class TodoListService {
+  constructor() {
+    this.db = new sqlite3.Database('demo.sqlite3');
+  }
   /**
    * list all records
    * @return {Promise<any>} all records array
    */
   all() {
     return new Promise((resolve, reject) => {
-      db.all('SELECT id, content FROM todolist ORDER BY id DESC', function(err, rows) {
+      this.db.all('SELECT id, content FROM todolist ORDER BY id DESC', function(err, rows) {
         if (err) {
           console.log(err);
           reject(err);
@@ -28,7 +30,7 @@ class TodoListService {
    */
   get($id) {
     return new Promise((resolve, reject) => {
-      db.get('SELECT id, content FROM todolist WHERE id=$id', { $id }, function(err, row) {
+      this.db.get('SELECT id, content FROM todolist WHERE id=$id', { $id }, function(err, row) {
         if (err) {
           console.log(err);
           reject(err);
@@ -50,7 +52,7 @@ class TodoListService {
    */
   create($content) {
     return new Promise((resolve, reject) => {
-      db.run('INSERT INTO todolist(content) VALUES ($content)', { $content }, function(err) {
+      this.db.run('INSERT INTO todolist(content) VALUES ($content)', { $content }, function(err) {
         if (err) {
           reject(err);
         } else {
@@ -67,7 +69,7 @@ class TodoListService {
    */
   update($id, $content) {
     return new Promise((resolve, reject) => {
-      db.run('UPDATE todolist SET content=$content WHERE id=$id', { $id, $content }, function(err) {
+      this.db.run('UPDATE todolist SET content=$content WHERE id=$id', { $id, $content }, function(err) {
         if (err) {
           reject(err);
         } else {
@@ -83,7 +85,7 @@ class TodoListService {
    */
   destroy($id) {
     return new Promise((resolve, reject) => {
-      db.run('DELETE FROM todolist WHERE id=$id', { $id }, function(err) {
+      this.db.run('DELETE FROM todolist WHERE id=$id', { $id }, function(err) {
         if (err) {
           reject(err);
         } else {
